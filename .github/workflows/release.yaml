@@ -1,0 +1,16 @@
+name: Release
+on: push
+
+jobs:
+  build:
+    name: build
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: numworks/setup-msys2@v1
+      - run: msys2do pacman -Sy --noconfirm base-devel gcc zlib libgnutls-devel libxml2-devel libnettle-devel libtasn1-devel p11-kit libp11-kit-devel liblz4-devel
+      - run: msys2do ./autogen.sh
+      - run: msys2do ./configure
+      - run: msys2do make
+      - run: msys2do make install
+    
